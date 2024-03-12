@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2196f3"/>
+  <link rel="stylesheet" href="style.css">
+  <link rel="apple-touch-icon" href="content/images/icons/icon-128x128.png">
+  <meta name="apply-mobile-web-app-status-bar" content="#2196f3">
+  <link rel="icon" type="image/png" href="/content/images/icons/icon-128x128.png">
+  <link rel="manifest" href="manifest.json">
+  <title>Форма</title>
+</head>
+<body>
+  <form>
+    <div>
+      <label for="name">Имя:</label>
+      <input type="text" id="name" name="name">
+    </div>
+    <div>
+      <label for="date">Дата:</label>
+      <input type="date" id="date" name="date">
+    </div>
+    <div>
+      <label for="quantity">Количество:</label>
+      <input type="number" id="quantity" name="quantity" min="1">
+    </div>
+    <button type="submit">Отправить</button>
+  </form>
+  <script src="content/js/app.js"></script>
+</body>
+</html>
