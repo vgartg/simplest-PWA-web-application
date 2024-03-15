@@ -18,17 +18,11 @@ self.addEventListener('install', async event => {
 });
 
 self.addEventListener('activate', async event => {
-    const cachesKeys = await caches.keys();
-    const checkKeys = cachesKeys.map(async key => {
-        if (![staticCacheName, dynamicCacheName].includes(key)) {
-            await caches.delete(key);
-        }
-    });
-    await Promise.all(checkKeys);
     console.log('Service worker has been activated');
 });
 
 self.addEventListener('fetch', event => {
+<<<<<<< HEAD
     console.log(`Trying to fetch ${event.request.url}`);
     event.respondWith(checkCache(event.request));
 });
@@ -55,3 +49,24 @@ async function checkOnline(req) {
         }
     }
 }
+=======
+    event.respondWith(
+        fetch(event.request).catch(() => {
+            return caches.match(event.request).then(cachedResponse => {
+                if (cachedResponse) {
+                    return cachedResponse;
+                }
+                return new Response('Соединение потеряно. Пожалуйста, попробуйте позже.', {
+                    headers: { 'Content-Type': 'text/html' },
+                    status: 503,
+                    statusText: 'Service Unavailable',
+                    body: 'Соединение потеряно. Пожалуйста, попробуйте позже.',
+                    headers: new Headers({
+                        'Content-Type': 'text/html; charset=utf-8'
+                    })
+                });
+            });
+        })
+    );
+});
+>>>>>>> 3a4fee605f27d6ed0f224bbcf5ddb8e86803ad98
