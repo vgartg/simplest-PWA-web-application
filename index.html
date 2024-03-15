@@ -8,10 +8,12 @@
   <link rel="apple-touch-icon" href="content/images/icons/icon-128x128.png">
   <meta name="apply-mobile-web-app-status-bar" content="#2196f3">
   <link rel="icon" type="image/png" href="/content/images/icons/icon-128x128.png">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link rel="manifest" href="manifest.json">
   <title>Форма</title>
 </head>
 <body>
+<div>
   <form>
     <div>
       <label for="name">Имя:</label>
@@ -27,6 +29,43 @@
     </div>
     <button type="submit">Отправить</button>
   </form>
+  <div class="modal" id="downloadModalDiv" tabindex="-1" role="dialog">
+    <a id="downloadModal" class="btn btn-primary">
+      <img src="/content/images/icons/icon-72x72.png" alt="Иконка приложения"/>
+    </a>
+  </div>
+</div>
   <script src="content/js/app.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      // Показываем пользователю ваше предложение установить приложение
+      showInstallPrompt();
+    });
+
+    function showInstallPrompt() {
+      const downloadButton = document.getElementById('downloadButton');
+      downloadButton.style.display = 'block';
+      downloadButton.addEventListener('click', () => {
+        // Показываем пользователю системный диалог установки PWA
+        deferredPrompt.prompt();
+        // Ждем ответа пользователя
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('Пользователь принял предложение установки');
+          } else {
+            console.log('Пользователь отклонил предложение установки');
+          }
+          deferredPrompt = null;
+        });
+      });
+    }
+  </script>
+  
 </body>
 </html>
